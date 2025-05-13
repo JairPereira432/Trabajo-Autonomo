@@ -3,52 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Online</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Mi Hoja de Vida</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background: linear-gradient(135deg, #20253b 0%, #4b84c5 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
         }
-        main {
-            flex: 1;
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
-<body class="bg-teal-50">
-    <header class="p-4 flex justify-between bg-neutral-50">
-        <h1 class="text-white text-center text-3xl font-bold">Tienda Online Jair Pereira</h1>
-        <nav class="flex justify-center space-x-4 mt-4">
-            <a href="#home" class="text-slate-700 hover:underline" aria-label="Ir a la sección de inicio">Inicio</a>
-            <a href="#products" class="text-slate-700 hover:underline" aria-label="Ir a la sección de productos">Productos</a>
-            <a href="#contact" class="text-slate-700 hover:underline" aria-label="Ir a la sección de contacto">Contacto</a>
-        </nav>
+<body>
+    <header>
+        <img src="Foto Jair/20230901_100703.jpg" alt="Foto de Jair Mateo Pereira Montenegro" style="width: 150px; height: auto; border-radius: 50%;">
+        <h1>Jair Mateo Pereira Montenegro</h1>
+        <p>Correo: jairm.pereiram@gmail.com | Teléfono: +593 098 386 9232 | CI: 1755626254</p>
+        <p>Dirección: Av.Atahualpa e Inés Gangotena Valle de los chillos, Quito, Ecuador</p>
     </header>
-    <main class="p-4">
-        <h2 class="text-center text-5xl font-bold text-white">Catálogo de Productos</h2>
-        <p class="text-center mt-4 text-white">Explora nuestra selección de productos disponibles</p>
-        <section class="flex justify-center flex-col items-center">
-            <input type="text" id="search" placeholder="Buscar productos..." class="pt-2 pb-2 pr-4 pl-4 border border-gray-300 rounded mt-4 w-full mb-8 max-w-md">
-            <div id="categorias" class="flex gap-3 justify-center flex-wrap mb-8"></div>
-        </section>
-        <section>
-            <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-36">
-                <!-- Aquí puedes agregar tus productos -->
-                <div class="bg-white p-4 rounded shadow">
-                    <img src="ruta/a/imagen.jpg" alt="Producto 1" class="w-full h-48 object-cover rounded">
-                    <h3 class="text-xl font-semibold mt-2">Producto 1</h3>
-                    <p class="text-gray-700 mt-1">$10.00</p>
-                    <button class="mt-4 bg-gradient-to-r from-blue-500 to-black text-white py-2 px-4 rounded hover:bg-gradient-to-r hover:from-blue-600 hover:to-black transition-colors duration-300">Agregar al carrito</button>
-                </div>
-                <!-- Repite el bloque anterior para más productos -->
-            </div>
-        </section>
-    </main>
-    <footer class="flex justify-center items-center p-4 bg-neutral-50 text-center w-full">
-        <p>&copy; 2025 Tienda Online. Todos los derechos reservados</p>
-    </footer>
-    <script src="app.js"></script>
+
+    <section>
+        <h2>Perfil Profesional</h2>
+        <p>Ingeniero de Sistemas en formación, con experiencia en la creación
+            de páginas web, mantenimiento de computadoras y monitoreo de redes. 
+            Destacado por su capacidad de análisis de proyectos y resolución 
+            de problemas técnicos. Posee habilidades en herramientas como Word, 
+            Excel, PowerPoint, Canva y Pseint. Comprometido con el trabajo en 
+            equipo, la puntualidad, la responsabilidad y la adaptabilidad a 
+            nuevos desafíos.</p>
+    </section>
+
+    <section>
+        <h2>Experiencia Laboral</h2>
+        <ul>
+            <li>
+                <strong>Unidad Educativa Mahanaym</strong> - Prácticas Preprofesionales de Servicio Comunitario (Febrero 2024 - Marzo 2024)
+                <p>Realicé tareas como monitoreo de redes, análisis de proyectos y colaboración en la resolución de problemas técnicos, contribuyendo al desarrollo tecnológico de la institución.</p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Educación</h2>
+        <ul>
+            <li><strong>Instituto Tecnológico Rumiñahui</strong> - Sistemas y Gestión de data (2023 - 2026)</li>
+            <li><strong>Unidad Educativa Mahanaym</strong> - Bachillerato (2020 - 2023)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Habilidades</h2>
+        <ul>
+            <li>Diseño de Páginas Web</li>
+            <li>Monitoreo de redes</li>
+            <li>Mantenimiento de Computadoras</li>
+            <li>Análisis de proyectos</li>
+            <li>Colaboración de problemás tecnicos</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Idiomas</h2>
+        <ul>
+            <li>Español - Nativo</li>
+            <li>Inglés - Máximo</li>
+        </ul>
+    </section>
 </body>
 </html>
+
