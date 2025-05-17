@@ -1,90 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Hoja de Vida</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 5px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #20253b 0%, #4b84c5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <img src="Foto Jair/20230901_100703.jpg" alt="Foto de Jair Mateo Pereira Montenegro" style="width: 150px; height: auto; border-radius: 50%;">
-        <h1>Jair Mateo Pereira Montenegro</h1>
-        <p>Correo: jairm.pereiram@gmail.com | Teléfono: +593 098 386 9232 | CI: 1755626254</p>
-        <p>Dirección: Av.Atahualpa e Inés Gangotena Valle de los chillos, Quito, Ecuador</p>
-    </header>
+<body class="bg-teal-50">
+  <header class="p-4 flex justify-between bg-neutral-50">
+    <div class="ml-auto relative inline-block text-left">
+      <!-- Botón de menú tipo hamburguesa -->
+      <button id="menuButton" class="bg-black text-white p-3 rounded-full hover:bg-gray-800 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
 
-    <section>
-        <h2>Perfil Profesional</h2>
-        <p>Ingeniero de Sistemas en formación, con experiencia en la creación
-            de páginas web, mantenimiento de computadoras y monitoreo de redes. 
-            Destacado por su capacidad de análisis de proyectos y resolución 
-            de problemas técnicos. Posee habilidades en herramientas como Word, 
-            Excel, PowerPoint, Canva y Pseint. Comprometido con el trabajo en 
-            equipo, la puntualidad, la responsabilidad y la adaptabilidad a 
-            nuevos desafíos.</p>
-    </section>
+      <!-- Menú desplegable -->
+      <div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+        <a href="index.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Inicio</a>
+        <a href="index.html#productos" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Productos</a>
+        <a href="contacto.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Contacto</a>
+        <button id="logoutBtn" class="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
 
-    <section>
-        <h2>Experiencia Laboral</h2>
-        <ul>
-            <li>
-                <strong>Unidad Educativa Mahanaym</strong> - Prácticas Preprofesionales de Servicio Comunitario (Febrero 2024 - Marzo 2024)
-                <p>Realicé tareas como monitoreo de redes, análisis de proyectos y colaboración en la resolución de problemas técnicos, contribuyendo al desarrollo tecnológico de la institución.</p>
-            </li>
-        </ul>
+  <main class="p-4">
+    <h2 class="text-center text-5xl font-bold text-white">Catálogo de Productos</h2>
+    <p class="text-center mt-4 text-white">Explora nuestra selección de productos disponibles</p>
+    <section class="flex justify-center flex-col items-center">
+      <input type="text" id="search" placeholder="Buscar productos..." class="pt-2 pb-2 pr-4 pl-4 border border-gray-300 rounded mt-4 w-full mb-8 max-w-md" />
+      <div id="categorias" class="flex gap-3 justify-center flex-wrap mb-8"></div>
     </section>
+    <section>
+      <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-36">
+        <!-- Productos se cargan dinámicamente -->
+      </div>
+    </section>
+  </main>
 
-    <section>
-        <h2>Educación</h2>
-        <ul>
-            <li><strong>Instituto Tecnológico Rumiñahui</strong> - Sistemas y Gestión de data (2023 - 2026)</li>
-            <li><strong>Unidad Educativa Mahanaym</strong> - Bachillerato (2020 - 2023)</li>
-        </ul>
-    </section>
+  <footer class="flex justify-center items-center p-4 bg-neutral-50 text-center w-full">
+    <p>&copy; 2025 Tienda Online. Todos los derechos reservados</p>
+  </footer>
 
-    <section>
-        <h2>Habilidades</h2>
-        <ul>
-            <li>Diseño de Páginas Web</li>
-            <li>Monitoreo de redes</li>
-            <li>Mantenimiento de Computadoras</li>
-            <li>Análisis de proyectos</li>
-            <li>Colaboración de problemás tecnicos</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>Idiomas</h2>
-        <ul>
-            <li>Español - Nativo</li>
-            <li>Inglés - Máximo</li>
-        </ul>
-    </section>
+  <script src="app.js"></script>
 </body>
 </html>
-

@@ -35,11 +35,7 @@ const mostrarCategorias = (categorias) => {
     if (categoria === categoriaSeleccionada) {
       btn.classList.add("from-blue-800");
     }
-
-    btn.textContent =
-      categoria === "all"
-        ? "Todos"
-        : categoria.charAt(0).toUpperCase() + categoria.slice(1);
+    btn.textContent = categoria === "all" ? "Todos" : categoria.charAt(0).toUpperCase() + categoria.slice(1);
     btn.addEventListener("click", () => {
       categoriaSeleccionada = categoria;
       mostrarCategorias(categorias);
@@ -57,9 +53,7 @@ const filtrarProductos = () => {
   const text = busqueda.value.toLowerCase();
   if (text.trim() !== "") {
     filtrados = filtrados.filter(
-      (p) =>
-        p.title.toLowerCase().includes(text) ||
-        p.description.toLowerCase().includes(text)
+      (p) => p.title.toLowerCase().includes(text) || p.description.toLowerCase().includes(text)
     );
   }
   mostrarProductos(filtrados);
@@ -69,35 +63,49 @@ const mostrarProductos = (productos) => {
   contenedor.innerHTML = "";
   productos.forEach(({ image, title, price, description }) => {
     const div = document.createElement("div");
-    div.classList.add(
-      "bg-white",
-      "rounded-lg",
-      "shadow-md",
-      "p-4",
-      "flex",
-      "flex-col",
-      "items-center",
-      "justify-between",
-      "hover:shadow-lg",
-      "transition-shadow",
-      "duration-300"
-    );
+    div.className = "bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow duration-300 relative";
     div.innerHTML = `
-        <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4">
-        <h2 class="text-center font-bold mb-2">${title}</h2>
-        <p class="text-sm sm:text-[14px] md:text-[10px] xl:text-[14px] text-gray-600 text-center mb-4 break-words">${description}</p> 
-        <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-        <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:bg-gradient-to-r hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Agregar al carrito</button>
-      `;
+      <div class="absolute top-2 right-2 z-20">
+        <button class="text-xl font-bold px-2 py-1 rounded hover:bg-gray-200" onclick="this.nextElementSibling.classList.toggle('hidden')">&#8942;</button>
+        <div class="info-box hidden absolute right-0 mt-2 bg-gray-100 text-sm text-gray-700 p-2 rounded shadow-md w-64 z-30">
+          <strong>Información del producto:</strong>
+          <p class="mt-1">${description}</p>
+        </div>
+      </div>
+      <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4 mt-6">
+      <h2 class="text-center font-bold mb-2">${title}</h2>
+      <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
+      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Agregar al carrito</button>
+    `;
     contenedor.append(div);
   });
 };
 
-busqueda.addEventListener("input", filtrarProductos);
+busqueda?.addEventListener("input", filtrarProductos);
+
 document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("loginForm")) return; // Solo ejecuta si no es login
   cargarProductos();
   cargarCategorias();
+  mostrarLogoutButton();
 });
+
+// LOGIN
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const mensaje = document.getElementById("mensaje");
+
+      try {
+        const response = await fetch("https://fakestoreapi.com/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
 
         if (!response.ok) throw new Error("Error en la respuesta de la API");
 
