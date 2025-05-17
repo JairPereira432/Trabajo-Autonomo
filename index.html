@@ -22,8 +22,7 @@
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold">Tienda Online</h1>
       <button id="menuBtn" class="md:hidden focus:outline-none">
-        <!-- Ícono hamburguesa -->
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <!-- Ícono hamburguesa class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
@@ -31,7 +30,7 @@
         <a href="index.html" class="hover:text-teal-300">Inicio</a>
         <a href="index.html#productos" class="hover:text-teal-300">Productos</a>
         <a href="contacto.html" class="hover:text-teal-300">Contacto</a>
-        <button class="hover:text-red-400">Cerrar sesión</button>
+        <button id="logoutBtn" class="hover:text-red-400">Cerrar sesión</button>
       </nav>
     </div>
     <!-- Menú desplegable para móviles -->
@@ -39,7 +38,7 @@
       <a href="index.html" class="block hover:text-teal-300">Inicio</a>
       <a href="index.html#productos" class="block hover:text-teal-300">Productos</a>
       <a href="contacto.html" class="block hover:text-teal-300">Contacto</a>
-      <button class="block hover:text-red-400">Cerrar sesión</button>
+      <button id="logoutBtnMobile" class="block hover:text-red-400">Cerrar sesión</button>
     </div>
   </header>
 
@@ -69,7 +68,18 @@
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+
+    [logoutBtn, logoutBtnMobile].forEach(btn => {
+      if (btn) {
+        btn.addEventListener("click", () => {
+          localStorage.removeItem("token");
+          window.location.href = "login.html";
+        });
+      }
+    });
   </script>
 </body>
 </html>
-
