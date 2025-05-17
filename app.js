@@ -13,7 +13,7 @@ const cargarProductos = async () => {
     mostrarProductos(productos);
   } catch (error) {
     console.error("Error al cargar los productos:", error);
-    contenedor.innerHTML = "<p>Error al cargar los productos</p>";
+    contenedor.innerHTML = "<p class='text-white'>Error al cargar los productos</p>";
   }
 };
 
@@ -29,27 +29,23 @@ const cargarCategorias = async () => {
   }
 };
 
-const mostrarProductos = (productos) => {
-  contenedor.innerHTML = "";
-  productos.forEach(({ image, title, price, description }) => {
-    const div = document.createElement("div");
-    div.className = "bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow duration-300 relative";
-    div.innerHTML = `
-      <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4 mt-6">
-      <h2 class="text-center font-bold mb-2">${title}</h2>
-      <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-      <button class="detalles-btn cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Detalles</button>
-      <div class="detalles-info hidden mt-4 text-sm text-gray-700 bg-gray-100 p-3 rounded shadow-inner">${description}</div>
-    `;
-    contenedor.append(div);
-  });
-
-  // Agregar funcionalidad a los botones "Detalles"
-  document.querySelectorAll(".detalles-btn").forEach((btn) => {
+// Mostrar botones de categorías
+const mostrarCategorias = (categorias) => {
+  if (!btnsearchContainer) return;
+  btnsearchContainer.innerHTML = "";
+  categorias.forEach((categoria) => {
+    const btn = document.createElement("button");
+    btn.className = "text-white px-4 py-2 rounded mr-2 mb-2 hover:bg-blue-800 transition-colors duration-300 cursor-pointer bg-gradient-to-r from-blue-500 to-black";
+    if (categoria === categoriaSeleccionada) {
+      btn.classList.add("from-blue-800");
+    }
+    btn.textContent = categoria === "all" ? "Todos" : categoria.charAt(0).toUpperCase() + categoria.slice(1);
     btn.addEventListener("click", () => {
-      const info = btn.nextElementSibling;
-      info.classList.toggle("hidden");
+      categoriaSeleccionada = categoria;
+      mostrarCategorias(categorias);
+      filtrarProductos();
     });
+    btnsearchContainer.append(btn);
   });
 };
 
@@ -70,24 +66,26 @@ const filtrarProductos = () => {
 
 // Mostrar productos en el DOM
 const mostrarProductos = (productos) => {
+  if (!contenedor) return;
   contenedor.innerHTML = "";
   productos.forEach(({ image, title, price, description }) => {
     const div = document.createElement("div");
     div.className = "bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow duration-300 relative";
     div.innerHTML = `
-      <div class="absolute top-2 right-2 z-20">
-        <button class="text-xl font-bold px-2 py-1 rounded hover:bg-gray-200" onclick="this.nextElementSibling.classList.toggle('hidden')">&#8942;</button>
-        <div class="info-box hidden absolute right-0 mt-2 bg-gray-100 text-sm text-gray-700 p-2 rounded shadow-md w-64 z-30">
-          <strong>Información del producto:</strong>
-          <p class="mt-1">${description}</p>
-        </div>
-      </div>
       <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4 mt-6">
       <h2 class="text-center font-bold mb-2">${title}</h2>
       <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Agregar al carrito</button>
+      <button class="detalles-btn cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Detalles</button>
+      <div class="detalles-info hidden mt-4 text-sm text-gray-700 bg-gray-100 p-3 rounded shadow-inner">${description}</div>
     `;
     contenedor.append(div);
+  });
+
+  document.querySelectorAll(".detalles-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const info = btn.nextElementSibling;
+      info.classList.toggle("hidden");
+    });
   });
 };
 
@@ -138,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Cierre de sesión (botones en escritorio y móvil)
+// Cierre de sesión
 document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   const logoutBtnMobile = document.getElementById("logoutBtnMobile");
