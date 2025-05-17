@@ -4,6 +4,7 @@ const btnsearchContainer = document.querySelector("#categorias");
 const contenedor = document.querySelector("#productos");
 let categoriaSeleccionada = "all";
 
+// Cargar productos desde la API
 const cargarProductos = async () => {
   try {
     const response = await fetch("https://fakestoreapi.com/products");
@@ -16,6 +17,7 @@ const cargarProductos = async () => {
   }
 };
 
+// Cargar categorías desde la API
 const cargarCategorias = async () => {
   try {
     const response = await fetch("https://fakestoreapi.com/products/categories");
@@ -23,10 +25,11 @@ const cargarCategorias = async () => {
     const categorias = await response.json();
     mostrarCategorias(["all", ...categorias]);
   } catch (error) {
-    console.error("Error al cargar las categorias:", error);
+    console.error("Error al cargar las categorías:", error);
   }
 };
 
+// Mostrar botones de categorías
 const mostrarCategorias = (categorias) => {
   btnsearchContainer.innerHTML = "";
   categorias.forEach((categoria) => {
@@ -45,12 +48,13 @@ const mostrarCategorias = (categorias) => {
   });
 };
 
+// Filtrar productos por categoría y búsqueda
 const filtrarProductos = () => {
   let filtrados = productos;
   if (categoriaSeleccionada !== "all") {
     filtrados = filtrados.filter((p) => p.category === categoriaSeleccionada);
   }
-  const text = busqueda.value.toLowerCase();
+  const text = busqueda?.value.toLowerCase() || "";
   if (text.trim() !== "") {
     filtrados = filtrados.filter(
       (p) => p.title.toLowerCase().includes(text) || p.description.toLowerCase().includes(text)
@@ -59,6 +63,7 @@ const filtrarProductos = () => {
   mostrarProductos(filtrados);
 };
 
+// Mostrar productos en el DOM
 const mostrarProductos = (productos) => {
   contenedor.innerHTML = "";
   productos.forEach(({ image, title, price, description }) => {
@@ -81,16 +86,18 @@ const mostrarProductos = (productos) => {
   });
 };
 
+// Buscar productos en tiempo real
 busqueda?.addEventListener("input", filtrarProductos);
 
+// Inicializar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("loginForm")) return; // Solo ejecuta si no es login
-  cargarProductos();
-  cargarCategorias();
-  mostrarLogoutButton();
+  if (!document.getElementById("loginForm")) {
+    cargarProductos();
+    cargarCategorias();
+  }
 });
 
-// LOGIN
+// Login
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
@@ -126,34 +133,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// CIERRE DE SESIÓN
-const mostrarLogoutButton = () => {
-  const logoutButton = document.getElementById("logoutButton");
-  if (localStorage.getItem("token")) {
-    logoutButton.classList.remove("hidden");
-    logoutButton.addEventListener("click", () => {
-      localStorage.removeItem("token");
-      window.location.href = "login.html";
-    });
-  }
-};
-
-// Mostrar/ocultar menú desplegable
+// Cierre de sesión (botones en escritorio y móvil)
 document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.getElementById("menuButton");
-  const menuDropdown = document.getElementById("menuDropdown");
   const logoutBtn = document.getElementById("logoutBtn");
+  const logoutBtnMobile = document.getElementById("logoutBtnMobile");
 
-  if (menuButton && menuDropdown) {
-    menuButton.addEventListener("click", () => {
-      menuDropdown.classList.toggle("hidden");
-    });
-  }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("token");
-      window.location.href = "login.html";
-    });
-  }
+  [logoutBtn, logoutBtnMobile].forEach(btn => {
+    if (btn) {
+      btn.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      });
+    }
+  });
 });
