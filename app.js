@@ -7,16 +7,9 @@ let categoriaSeleccionada = "all";
 const cargarProductos = async () => {
   try {
     const response = await fetch("https://fakestoreapi.com/products");
-    if (!response.ok) {
-      throw new Error("Error en la respuesta de la API");
-    }
+    if (!response.ok) throw new Error("Error en la respuesta de la API");
     productos = await response.json();
-    if (productos.length === 0) {
-      console.warn("no hay productos");
-      throw new Error("No se encontraron productos");
-    } else {
-      mostrarProductos(productos);
-    }
+    mostrarProductos(productos);
   } catch (error) {
     console.error("Error al cargar los productos:", error);
     contenedor.innerHTML = "<p>Error al cargar los productos</p>";
@@ -26,9 +19,7 @@ const cargarProductos = async () => {
 const cargarCategorias = async () => {
   try {
     const response = await fetch("https://fakestoreapi.com/products/categories");
-    if (!response.ok) {
-      throw new Error("Error en la respuesta de la API");
-    }
+    if (!response.ok) throw new Error("Error en la respuesta de la API");
     const categorias = await response.json();
     mostrarCategorias(["all", ...categorias]);
   } catch (error) {
@@ -40,26 +31,9 @@ const mostrarCategorias = (categorias) => {
   btnsearchContainer.innerHTML = "";
   categorias.forEach((categoria) => {
     const btn = document.createElement("button");
-    btn.classList.add(
-      "text-white",
-      "px-4",
-      "py-2",
-      "rounded",
-      "mr-2",
-      "mb-2",
-      "hover:bg-blue-800",
-      "transition-colors",
-      "duration-300",
-      "cursor-pointer",
-      "bg-gradient-to-r",
-      "from-blue-500",
-      "to-black"
-    );
-
+    btn.className = "text-white px-4 py-2 rounded mr-2 mb-2 hover:bg-blue-800 transition-colors duration-300 cursor-pointer bg-gradient-to-r from-blue-500 to-black";
     if (categoria === categoriaSeleccionada) {
-      btn.classList.add("bg-gradient-to-r", "from-blue-800", "to-black");
-    } else {
-      btn.classList.add("bg-gradient-to-r", "from-blue-500", "to-black");
+      btn.classList.add("from-blue-800");
     }
 
     btn.textContent =
@@ -123,4 +97,55 @@ busqueda.addEventListener("input", filtrarProductos);
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductos();
   cargarCategorias();
+});
+
+        if (!response.ok) throw new Error("Error en la respuesta de la API");
+
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        mensaje.textContent = "Inicio de sesión exitoso";
+        mensaje.classList.add("text-green-500");
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        mensaje.textContent = "Error al iniciar sesión. Inténtalo de nuevo.";
+        mensaje.classList.add("text-red-500");
+      }
+    });
+  }
+});
+
+// CIERRE DE SESIÓN
+const mostrarLogoutButton = () => {
+  const logoutButton = document.getElementById("logoutButton");
+  if (localStorage.getItem("token")) {
+    logoutButton.classList.remove("hidden");
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
+  }
+};
+
+// Mostrar/ocultar menú desplegable
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.getElementById("menuButton");
+  const menuDropdown = document.getElementById("menuDropdown");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (menuButton && menuDropdown) {
+    menuButton.addEventListener("click", () => {
+      menuDropdown.classList.toggle("hidden");
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
+  }
 });
