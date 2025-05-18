@@ -21,11 +21,24 @@
   <header class="p-4 bg-gray-900 text-white">
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold">Tienda Online</h1>
-      <nav class="space-x-6 text-lg">
+      <button id="menuBtn" class="md:hidden focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          < stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <nav id="menu" class="hidden md:flex space-x-6 text-lg">
         <a href="index.html" class="hover:text-teal-300">Inicio</a>
+        <a href="index.html#productos" class="hover:text-teal-300">Productos</a>
         <a href="contacto.html" class="hover:text-teal-300">Contacto</a>
         <button id="logoutBtn" class="hover:text-red-400">Cerrar sesión</button>
       </nav>
+    </div>
+    <!-- Menú desplegable para móviles -->
+    <div id="mobileMenu" class="md:hidden hidden flex-col mt-4 space-y-2 text-lg">
+      <a href="index.html" class="block hover:text-teal-300">Inicio</a>
+      <a href="index.html#productos" class="block hover:text-teal-300">Productos</a>
+      <a href="contacto.html" class="block hover:text-teal-300">Contacto</a>
+      <button id="logoutBtnMobile" class="block hover:text-red-400">Cerrar sesión</button>
     </div>
   </header>
 
@@ -48,5 +61,26 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+
+    [logoutBtn, logoutBtnMobile].forEach(btn => {
+      if (btn) {
+        btn.addEventListener("click", () => {
+          localStorage.removeItem("token");
+          window.location.href = "login.html";
+        });
+      }
+    });
+  </script>
 </body>
 </html>
+
