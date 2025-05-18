@@ -4,27 +4,32 @@ const btnsearchContainer = document.querySelector("#categorias");
 const contenedor = document.querySelector("#productos");
 let categoriaSeleccionada = "all";
 
-// Cargar productos desde archivo local
-const productos = Array.from({ length: 100 }, (_, i) => ({
-  id: i + 1,
-  title: `Producto ${i + 1}`,
-  price: (10 + (i + 1) * 0.5).toFixed(2),
-  description: `Descripción del producto ${i + 1}. Este es un producto de prueba.`,
-  category: "categoría de prueba",
-  image: "https://via.placeholder.com/150"
-}));
-
-const busqueda = document.querySelector("#search");
-const btnsearchContainer = document.querySelector("#categorias");
-const contenedor = document.querySelector("#productos");
-let categoriaSeleccionada = "all";
-
-// Mostrar botones de categorías
-const cargarCategorias = () => {
-  const categorias = ["all", "categoría de prueba"];
-  mostrarCategorias(categorias);
+// Cargar productos desde la API
+const cargarProductos = async () => {
+  try {
+    const response = await fetch("https://fakestoreapi.com/products");
+    if (!response.ok) throw new Error("Error en la respuesta de la API");
+    productos = await response.json();
+    mostrarProductos(productos);
+  } catch (error) {
+    console.error("Error al cargar los productos:", error);
+    contenedor.innerHTML = "<p class='text-white'>Error al cargar los productos</p>";
+  }
 };
 
+// Cargar categorías desde la API
+const cargarCategorias = async () => {
+  try {
+    const response = await fetch("https://fakestoreapi.com/products/categories");
+    if (!response.ok) throw new Error("Error en la respuesta de la API");
+    const categorias = await response.json();
+    mostrarCategorias(["all", ...categorias]);
+  } catch (error) {
+    console.error("Error al cargar las categorías:", error);
+  }
+};
+
+// Mostrar botones de categorías
 const mostrarCategorias = (categorias) => {
   if (!btnsearchContainer) return;
   btnsearchContainer.innerHTML = "";
@@ -69,18 +74,11 @@ const mostrarProductos = (productos) => {
     div.innerHTML = `
       <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4 mt-6">
       <h2 class="text-center font-bold mb-2">${title}</h2>
+      <p class="text-sm text-gray-700 mb-2">${description}</p>
       <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-      <button class="detalles-btn cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Detalles</button>
-      <div class="detalles-info hidden mt-4 text-sm text-gray-700 bg-gray-100 p-3 rounded shadow-inner">${description}</div>
+      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Agregar al carrito</button>
     `;
     contenedor.append(div);
-  });
-
-  document.querySelectorAll(".detalles-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const info = btn.nextElementSibling;
-      info.classList.toggle("hidden");
-    });
   });
 };
 
@@ -90,8 +88,8 @@ busqueda?.addEventListener("input", filtrarProductos);
 // Inicializar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("loginForm")) {
+    cargarProductos();
     cargarCategorias();
-    mostrarProductos(productos);
   }
 });
 
