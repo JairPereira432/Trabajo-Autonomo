@@ -72,8 +72,9 @@ const mostrarProductos = (productos) => {
     const div = document.createElement("div");
     div.className = "bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow duration-300 relative";
     div.innerHTML = `
+      <img src="${image}" alt="${title}" class="w-32 h-32 object-contain mb-4" />
       <h2 class="text-center font-bold mb-2">${title}</h2>
-      <p class="text-lg font-semibold text-black mb-4">Precio: $${price}</p>
+      <p class="text-lg font-semibold text-black mb-2">Precio: $${price}</p>
       <button class="detalles-btn bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300">Detalles</button>
     `;
     const btn = div.querySelector(".detalles-btn");
@@ -84,6 +85,7 @@ const mostrarProductos = (productos) => {
     contenedor.append(div);
   });
 };
+
 
 // Buscar productos en tiempo real
 busqueda?.addEventListener("input", filtrarProductos);
