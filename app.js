@@ -75,20 +75,13 @@ const mostrarProductos = (productos) => {
       <h2 class="text-center font-bold mb-2">${title}</h2>
       <p class="text-lg font-semibold text-black mb-4">Precio: $${price}</p>
       <button class="detalles-btn bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300">Detalles</button>
-      <div class="detalles-info hidden mt-4 text-sm text-gray-700 bg-gray-100 p-4 rounded shadow-inner w-full text-center">
-        <img src="${image}" alt="${title}" class="w-32 h-32 object-contain mx-auto mb-4">
-        <p>${description}</p>
-      </div>
     `;
-    contenedor.append(div);
-  });
-
-  // Activar el botón de detalles
-  document.querySelectorAll(".detalles-btn").forEach((btn) => {
+    const btn = div.querySelector(".detalles-btn");
     btn.addEventListener("click", () => {
-      const info = btn.nextElementSibling;
-      info.classList.toggle("hidden");
+      localStorage.setItem("productoDetalle", JSON.stringify({ title, price, description, image }));
+      window.open("detalle.html", "_blank");
     });
+    contenedor.append(div);
   });
 };
 
