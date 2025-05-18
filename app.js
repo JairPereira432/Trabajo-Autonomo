@@ -5,19 +5,21 @@ const contenedor = document.querySelector("#productos");
 let categoriaSeleccionada = "all";
 
 // Cargar productos desde archivo local
-const cargarProductos = async () => {
-  try {
-    const response = await fetch("productos.json");
-    if (!response.ok) throw new Error("No se pudo cargar el archivo productos.json");
-    productos = await response.json();
-    mostrarProductos(productos);
-  } catch (error) {
-    console.error("Error al cargar los productos:", error);
-    contenedor.innerHTML = "<p class='text-white'>Error al cargar los productos</p>";
-  }
-};
+const productos = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  title: `Producto ${i + 1}`,
+  price: (10 + (i + 1) * 0.5).toFixed(2),
+  description: `Descripción del producto ${i + 1}. Este es un producto de prueba.`,
+  category: "categoría de prueba",
+  image: "https://via.placeholder.com/150"
+}));
 
-// Mostrar botones de categorías (simulados)
+const busqueda = document.querySelector("#search");
+const btnsearchContainer = document.querySelector("#categorias");
+const contenedor = document.querySelector("#productos");
+let categoriaSeleccionada = "all";
+
+// Mostrar botones de categorías
 const cargarCategorias = () => {
   const categorias = ["all", "categoría de prueba"];
   mostrarCategorias(categorias);
@@ -88,8 +90,8 @@ busqueda?.addEventListener("input", filtrarProductos);
 // Inicializar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   if (!document.getElementById("loginForm")) {
-    cargarProductos();
     cargarCategorias();
+    mostrarProductos(productos);
   }
 });
 
