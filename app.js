@@ -72,13 +72,23 @@ const mostrarProductos = (productos) => {
     const div = document.createElement("div");
     div.className = "bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-between hover:shadow-lg transition-shadow duration-300 relative";
     div.innerHTML = `
-      <img src="${image}" alt="${title}" loading="lazy" class="w-32 h-32 object-contain mb-4 mt-6">
       <h2 class="text-center font-bold mb-2">${title}</h2>
-      <p class="text-sm text-gray-700 mb-2">${description}</p>
-      <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Detalles</button>
+      <p class="text-lg font-semibold text-black mb-4">Precio: $${price}</p>
+      <button class="detalles-btn bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300">Detalles</button>
+      <div class="detalles-info hidden mt-4 text-sm text-gray-700 bg-gray-100 p-4 rounded shadow-inner w-full text-center">
+        <img src="${image}" alt="${title}" class="w-32 h-32 object-contain mx-auto mb-4">
+        <p>${description}</p>
+      </div>
     `;
     contenedor.append(div);
+  });
+
+  // Activar el botón de detalles
+  document.querySelectorAll(".detalles-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const info = btn.nextElementSibling;
+      info.classList.toggle("hidden");
+    });
   });
 };
 
