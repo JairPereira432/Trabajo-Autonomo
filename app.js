@@ -76,7 +76,7 @@ const mostrarProductos = (productos) => {
       <h2 class="text-center font-bold mb-2">${title}</h2>
       <p class="text-sm text-gray-700 mb-2">${description}</p>
       <p class="text-lg font-semibold text-black mb-4 mt-auto">Precio: $${price}</p>
-      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Agregar al carrito</button>
+      <button class="cursor-pointer bg-gradient-to-r from-blue-500 to-black text-white px-4 py-2 rounded hover:from-blue-600 hover:to-black transition-colors duration-300 self-stretch">Detalles</button>
     `;
     contenedor.append(div);
   });
