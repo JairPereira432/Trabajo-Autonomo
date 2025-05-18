@@ -4,11 +4,11 @@ const btnsearchContainer = document.querySelector("#categorias");
 const contenedor = document.querySelector("#productos");
 let categoriaSeleccionada = "all";
 
-// Cargar productos desde la API
+// Cargar productos desde archivo local
 const cargarProductos = async () => {
   try {
-    const response = await fetch("https://fakestoreapi.com/products");
-    if (!response.ok) throw new Error("Error en la respuesta de la API");
+    const response = await fetch("productos.json");
+    if (!response.ok) throw new Error("No se pudo cargar el archivo productos.json");
     productos = await response.json();
     mostrarProductos(productos);
   } catch (error) {
@@ -17,19 +17,12 @@ const cargarProductos = async () => {
   }
 };
 
-// Cargar categorías desde la API
-const cargarCategorias = async () => {
-  try {
-    const response = await fetch("https://fakestoreapi.com/products/categories");
-    if (!response.ok) throw new Error("Error en la respuesta de la API");
-    const categorias = await response.json();
-    mostrarCategorias(["all", ...categorias]);
-  } catch (error) {
-    console.error("Error al cargar las categorías:", error);
-  }
+// Mostrar botones de categorías (simulados)
+const cargarCategorias = () => {
+  const categorias = ["all", "categoría de prueba"];
+  mostrarCategorias(categorias);
 };
 
-// Mostrar botones de categorías
 const mostrarCategorias = (categorias) => {
   if (!btnsearchContainer) return;
   btnsearchContainer.innerHTML = "";
