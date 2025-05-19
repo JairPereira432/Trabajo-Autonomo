@@ -86,6 +86,7 @@ const mostrarProductos = (productos) => {
   });
 };
 
+
 // Buscar productos en tiempo real
 busqueda?.addEventListener("input", filtrarProductos);
 
